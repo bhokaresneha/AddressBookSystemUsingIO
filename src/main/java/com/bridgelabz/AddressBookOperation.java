@@ -1,3 +1,5 @@
+
+
 package com.bridgelabz;
 
 import java.io.*;
@@ -10,6 +12,7 @@ public class AddressBookOperation extends AddressBookMain {
     static Scanner scanner = new Scanner(System.in);
     static ArrayList<Contacts> contactDetails=new ArrayList<>();
     static char choice;
+    // static AddressBookOperation contacts =new AddressBookOperation();
     static HashMap<String, ArrayList<Contacts>> hashmap = new HashMap<>();
     static String AddressBookName;
     static File file =new File("//home//hp//IdeaProjects//AddressBookSystemUsingIO//src//AddressBookFile.txt");
@@ -17,7 +20,8 @@ public class AddressBookOperation extends AddressBookMain {
     public static void AddressBook(AddressBookOperation addressBookOperation) {
         do {
             System.out.println("Enter your choice \n1.Add New Address Book \n2.Display Address Books Names\n3.Search based on City or State" +
-                    "\n4.Count Persons belonging from Same City or State \n5.Sort Contact using Name \n6.Sort Contact using City, StateOr Zip-Code ");
+                    "\n4.Count Persons belonging from Same City or State \n5.Sort Contact using Name \n6.Sort Contact using City, StateOr Zip-Code " +
+                    "\n7.Read From File ");
             int ch = scanner.nextInt();
             switch (ch) {
                 case 1:
@@ -57,7 +61,9 @@ public class AddressBookOperation extends AddressBookMain {
                 case 6:
                     sortByCityStateOrZipCode();
                     break;
-
+                case 7:
+                    readFromFile();
+                    break;
                 default:
                     System.out.println("Invalid Option Entered!!!!! Please Enter Valid Option to Add New Address Book");
 
@@ -93,6 +99,7 @@ public class AddressBookOperation extends AddressBookMain {
             contacts.setZipCode(scanner.next());
             contactDetails.add(contacts);
             System.out.println("Contact details added!");
+            addToAdressBookFile(contactDetails);
             return contactDetails;
 
         } else {
@@ -120,6 +127,7 @@ public class AddressBookOperation extends AddressBookMain {
                     contacts.setZipCode(scanner.next());
                     contactDetails.add(contacts);
                     System.out.println("Contact details added!");
+                    addToAdressBookFile(contactDetails);
                     return contactDetails;
                 }
             }
@@ -241,14 +249,14 @@ public class AddressBookOperation extends AddressBookMain {
     // Searching a record in a through the City name or state name in Multiple Address Book
     public static void searchInMultipleAddressBook(String name){
         for (Map.Entry<String, ArrayList<Contacts>> entry : hashmap.entrySet()){
-                List<Contacts> search =entry.getValue()
-                        .stream()
-                        .filter(searchdata -> searchdata.getCity().equalsIgnoreCase(name) || searchdata.getState().equalsIgnoreCase(name))
-                        .collect(Collectors.toList());
-                for (Contacts item : search) {
-                    System.out.println(item.toString() + " ");
-                }
-                }
+            List<Contacts> search =entry.getValue()
+                    .stream()
+                    .filter(searchdata -> searchdata.getCity().equalsIgnoreCase(name) || searchdata.getState().equalsIgnoreCase(name))
+                    .collect(Collectors.toList());
+            for (Contacts item : search) {
+                System.out.println(item.toString() + " ");
+            }
+        }
     }
 
 
@@ -258,13 +266,13 @@ public class AddressBookOperation extends AddressBookMain {
     public static void searchInSingleAddressBook(ArrayList<Contacts> contactDetails) {
         System.out.println("Enter City Name or State Name to search a particular person");
         String data = scanner.next();
-                   List<Contacts> search =contactDetails
-                    .stream()
-                    .filter(searchdata -> searchdata.getCity().equalsIgnoreCase(data) || searchdata.getState().equalsIgnoreCase(data))
-                    .collect(Collectors.toList());
-            for (Contacts item : search) {
-                System.out.println(item.toString() + " ");
-            }
+        List<Contacts> search =contactDetails
+                .stream()
+                .filter(searchdata -> searchdata.getCity().equalsIgnoreCase(data) || searchdata.getState().equalsIgnoreCase(data))
+                .collect(Collectors.toList());
+        for (Contacts item : search) {
+            System.out.println(item.toString() + " ");
+        }
     }
 
     // Counting number of records through the City name or state name in Multiple Address Book
@@ -313,7 +321,7 @@ public class AddressBookOperation extends AddressBookMain {
     public static ArrayList<Contacts> displayActionMenu(ArrayList<Contacts> details) {
         do {
             System.out.println(" Enter your choice \n1.Add Detail\n2.Update Detail \n3.Delete Detail\n4.Display ALl Details\n5.Search Records based on city or state" +
-                    "\n6.Exit");
+                    "\n6.Read From File \n7.Exit");
             int ch = scanner.nextInt();
             switch (ch) {
                 case 1:
@@ -332,8 +340,10 @@ public class AddressBookOperation extends AddressBookMain {
                 case 5:
                     searchInSingleAddressBook(details);
                     break;
-
                 case 6:
+                    readFromFile();
+                    break;
+                case 7:
                     System.out.println("EXIT");
                     break;
                 default:
@@ -345,5 +355,28 @@ public class AddressBookOperation extends AddressBookMain {
         return null;
     }
 
+    //Adding records in AddressBookFile.txt File
+    private static void addToAdressBookFile(ArrayList<Contacts> contactDetails) {
+        for (Contacts p:contactDetails)
+            try(BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
+                writer.write("First Name- "+p.getFirstName()+"\t Last Name- " + p.getLastName() + "\t Contact Number- " + p.getContactNo() + "\t Email Address- " + p.getEmail()+
+                        "\t Address- " + p.getAddress() + "\t City- " + p.getCity() +"\t State- " + p.getState() + "\t Zip Code- " + p.getZipCode()  + "\n");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+    }
 
+    // Reading Records from AddressBookFile.txt file
+    public static void readFromFile() {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String st;
+            while ((st = reader.readLine()) != null) {
+                System.out.println(st);
+            }
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+
+    }
 }
