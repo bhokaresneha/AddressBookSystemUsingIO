@@ -1,5 +1,6 @@
 package com.bridgelabz;
 
+import com.google.gson.Gson;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 
@@ -20,14 +21,14 @@ public class AddressBookOperation implements AddressBookInterface {
     static String AddressBookName;
     static final File TEXT_file = new File("//home//hp//IdeaProjects//AddressBookSystemUsingIO//src//Resources//AddressBookFile.txt");
     static final String CSV_FILE = "//home//hp//IdeaProjects//AddressBookSystemUsingIO//src//Resources//CSVAddressBook.csv";
-    //  static final File JSON_File = new File("//home//hp//IdeaProjects//AddressBookSystemUsingIO//src//Resources//JSONFile.json");
+    static final File JSON_File = new File("//home//hp//IdeaProjects//AddressBookSystemUsingIO//src//Resources//JSONAddressBook.json");
 
     // Creating Multiple Address Books
     public static void AddressBook(AddressBookOperation addressBookOperation) throws IOException {
         do {
             System.out.println("Enter your choice \n1.Add New Address Book \n2.Display Address Books Names\n3.Search based on City or State" +
                     "\n4.Count Persons belonging from Same City or State \n5.Sort Contact using Name \n6.Sort Contact using City, StateOr Zip-Code " +
-                    "\n7.Read From Text File\n8.Read From CSV File  ");
+                    "\n7.Read From Text File\n8.Read From CSV File \n9. Read From JSON File  ");
             int ch = scanner.nextInt();
             switch (ch) {
                 case 1:
@@ -59,6 +60,9 @@ public class AddressBookOperation implements AddressBookInterface {
                 case 8:
                     addressBookOperation.readFromCSVFile();
                     break;
+                case 9:
+                    addressBookOperation.readFromJSONFile();
+                    break;
                 default:
                     System.out.println("Invalid Option Entered!!!!! Please Enter Valid Option to Add New Address Book");
 
@@ -87,6 +91,7 @@ public class AddressBookOperation implements AddressBookInterface {
             }
             addToTexrFile(hashmap);
             addToCSVFile(hashmap);
+            addToJSONFile(hashmap);
             System.out.println("AddressBook Added" + hashmap + " ");
             System.out.println("To Add or Perform More Operations on Address Books  press Y otherwise press N");
             choice = scanner.next().charAt(0);
@@ -452,6 +457,46 @@ public class AddressBookOperation implements AddressBookInterface {
             }
         } catch (Exception e){
             System.out.println(e);
+        }
+    }
+
+    public void addToJSONFile(HashMap<String, ArrayList<Contacts>> hashmap) {
+        // for (Map.Entry<String, ArrayList<Contacts>> entry : hashmap.entrySet())
+        //   for (Contacts p : entry.getValue()) {
+
+            /* writer reads the current line and the Java readLine function writer.readLine() returns a string.
+             Hence, the loop will iterate until it’s not null.*/
+        try (BufferedWriter writer1 = new BufferedWriter(new FileWriter(JSON_File, true))) {
+            Gson gson = new Gson();
+
+            String jsonString = gson.toJson(hashmap);
+            writer1.write(jsonString);
+
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+
+    }
+    public void readFromJSONFile() {
+        try {
+            // Creating a BufferedReader object (instance)
+            // A Reader that reads creates an input
+            // character stream
+            // and reads characters from it
+
+            BufferedReader reader = new BufferedReader(new FileReader(JSON_File));
+            String st;
+            // readLine() method of BufferedReader returns a whole line at a time
+            //   BufferedReader#readLine() method is called,
+            //   characters of a line stored in the buffer,
+            //   are returned as a String.
+            while ((st = reader.readLine()) != null) {
+                System.out.println(st);
+                System.out.print("\n");
+
+            }
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
         }
     }
 

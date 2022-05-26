@@ -24,4 +24,7 @@ public interface AddressBookInterface {
     void readFromTextFile();
     void addToCSVFile(HashMap<String, ArrayList<Contacts>> hashmap) throws IOException;
     void readFromCSVFile();
-    }
+    void addToJSONFile(HashMap<String, ArrayList<Contacts>> hashmap);
+    void readFromJSONFile();
+
+}
