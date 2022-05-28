@@ -206,13 +206,16 @@ mysql> ALTER TABLE AddressBook ADD(Book_Name VARCHAR(50) NOT NULL,Type VARCHAR(5
                                     //Ability to get number of contact persons
                                                -i.e. count by type
 
-mysql> SELECT COUNT(*) FROM AddressBook;
-+----------+
-| COUNT(*) |
-+----------+
-|        2 |
-+----------+
-1 row in set (0.00 sec)
+mysql> SELECT COUNT(Type) FROM AddressBook GROUP BY Type;
++-------------+
+| COUNT(Type) |
++-------------+
+|           3 |
+|           1 |
+|           2 |
++-------------+
+3 rows in set (0.00 sec)
+
 
 ****************************************************************** UC11 **************************************************************************
                                     //UC-Ability to add person to both Friend and Family
