@@ -228,6 +228,7 @@ mysql> INSERT INTO AddressBook(First_Name,Last_Name,Phone_Number,Email,Address,C
 Query OK, 4 rows affected (0.01 sec)
 Records: 4  Duplicates: 0  Warnings: 0
 
+
 mysql> SELECT * FROM AddressBook;
 +------------+-----------+--------------+-----------------+----------+------+-------------+----------+-----------+------------+
 | First_Name | Last_Name | Phone_Number | Email           | Address  | City | State       | Zip_Code | Book_Name | Type       |
