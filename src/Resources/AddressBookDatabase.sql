@@ -1,6 +1,20 @@
 ****************************************************************** UC1 **************************************************************************
-// UC-Ability to create a Address Book Service DB
-    - Use SQL Client to create DB and DB Records
+                                    // UC-Ability to create a Address Book Service DB
+                                        - Use SQL Client to create DB and DB Records
+    
+mysql> show databases;
++----------------------+
+| Database             |
++----------------------+
+| Address_Book_Service |
+| information_schema   |
+| mysql                |
+| payroll_services     |
+| performance_schema   |
+| sys                  |
++----------------------+
+6 rows in set (0.01 sec)
+
 mysql> create database AddressBookService
     -> ;
 Query OK, 1 row affected (0.02 sec)
@@ -192,13 +206,16 @@ mysql> ALTER TABLE AddressBook ADD(Book_Name VARCHAR(50) NOT NULL,Type VARCHAR(5
                                     //Ability to get number of contact persons
                                                -i.e. count by type
 
-mysql> SELECT COUNT(*) FROM AddressBook;
-+----------+
-| COUNT(*) |
-+----------+
-|        2 |
-+----------+
-1 row in set (0.00 sec)
+mysql> SELECT COUNT(Type) FROM AddressBook GROUP BY Type;
++-------------+
+| COUNT(Type) |
++-------------+
+|           3 |
+|           1 |
+|           2 |
++-------------+
+3 rows in set (0.00 sec)
+
 
 ****************************************************************** UC11 **************************************************************************
                                     //UC-Ability to add person to both Friend and Family
