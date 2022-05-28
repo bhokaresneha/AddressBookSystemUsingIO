@@ -1,6 +1,20 @@
 ****************************************************************** UC1 **************************************************************************
-// UC-Ability to create a Address Book Service DB
-    - Use SQL Client to create DB and DB Records
+                                    // UC-Ability to create a Address Book Service DB
+                                        - Use SQL Client to create DB and DB Records
+    
+mysql> show databases;
++----------------------+
+| Database             |
++----------------------+
+| Address_Book_Service |
+| information_schema   |
+| mysql                |
+| payroll_services     |
+| performance_schema   |
+| sys                  |
++----------------------+
+6 rows in set (0.01 sec)
+
 mysql> create database AddressBookService
     -> ;
 Query OK, 1 row affected (0.02 sec)
