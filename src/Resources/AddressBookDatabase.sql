@@ -69,9 +69,9 @@ mysql> desc AddressBook
                     //UC-Ability to insert new Contacts to Address Book
 
 mysql> INSERT INTO AddressBook(First_Name,Last_Name,Phone_Number,Email,Address,City,State,Zip_Code) VALUES
-    -> ('Sneha','Bhokare',"9762689841","sneha@gmail.com",'Sangvi','Pune','Maharashtra',444222),
-    -> ('Sunil','Kanse',"9988689841","sunil@gmail.com",'Baramati','Pune','Maharashtra',413102),
-    -> ('Saurabh','Kodam',"8888898765","saurabh@gmail.com",'Nagar','Pune','Maharashtra',413115);
+    ('Sneha','Bhokare',"9762689841","sneha@gmail.com",'Sangvi','Pune','Maharashtra',444222),
+     ('Sunil','Kanse',"9988689841","sunil@gmail.com",'Baramati','Pune','Maharashtra',413102),
+     ('Saurabh','Kodam',"8888898765","saurabh@gmail.com",'Nagar','Pune','Maharashtra',413115);
 Query OK, 3 rows affected (0.00 sec)
 Records: 3  Duplicates: 0  Warnings: 0
 
@@ -221,10 +221,10 @@ mysql> SELECT COUNT(Type) FROM AddressBook GROUP BY Type;
                                     //UC-Ability to add person to both Friend and Family
 
 mysql> INSERT INTO AddressBook(First_Name,Last_Name,Phone_Number,Email,Address,City,State,Zip_Code,Book_Name,Type) VALUES
-    ->      ('Sahil','Shinde',9762689841,"sneha@gmail.com",'Sangvi','Pune','Maharashtra',444222,'TCS','Profession'),
-    ->      ('Sahil','Shinde',9762689841,"sneha@gmail.com",'Sangvi','Pune','Maharashtra',444222,'TCS','Family'),
-    ->      ('Sohan','Kamble',"9988689841","Sohan@gmail.com",'Baramati','Pune','Maharashtra',413102,'Family','Family'),
-    ->      ('Sahil','Shinde',9762689841,"sneha@gmail.com",'Sangvi','Pune','Maharashtra',444222,'TCS','Profession');
+          ('Sahil','Shinde',9762689841,"sneha@gmail.com",'Sangvi','Pune','Maharashtra',444222,'TCS','Profession'),
+         ('Sahil','Shinde',9762689841,"sneha@gmail.com",'Sangvi','Pune','Maharashtra',444222,'TCS','Family'),
+          ('Sohan','Kamble',"9988689841","Sohan@gmail.com",'Baramati','Pune','Maharashtra',413102,'Family','Family'),
+          ('Sahil','Shinde',9762689841,"sneha@gmail.com",'Sangvi','Pune','Maharashtra',444222,'TCS','Profession');
 Query OK, 4 rows affected (0.01 sec)
 Records: 4  Duplicates: 0  Warnings: 0
 
@@ -241,3 +241,5 @@ mysql> SELECT * FROM AddressBook;
 | Sahil      | Shinde    |   9762689841 | sneha@gmail.com | Sangvi   | Pune | Maharashtra |   444222 | TCS       | Profession |
 +------------+-----------+--------------+-----------------+----------+------+-------------+----------+-----------+------------+
 6 rows in set (0.00 sec)
+*******************************************************************************************************************************************
+

@@ -108,7 +108,7 @@ public class AddressBookOperation implements AddressBookInterface {
             System.out.println("Enter Last Name");
             contacts.setLastName(scanner.next());
             System.out.println("Enter contact Number:");
-            contacts.setContactNo(scanner.next());
+            contacts.setContactNo(scanner.nextInt());
             System.out.println("Enter Email: ");
             contacts.setEmail(scanner.next());
             System.out.println("Enter Address: ");
@@ -118,7 +118,7 @@ public class AddressBookOperation implements AddressBookInterface {
             System.out.println("Enter State: ");
             contacts.setState(scanner.next());
             System.out.println("Enetr Zip Code:");
-            contacts.setZipCode(scanner.next());
+            contacts.setZipCode(scanner.nextInt());
             contactDetails.add(contacts);
             System.out.println("Contact details added!");
             return contactDetails;
@@ -134,7 +134,7 @@ public class AddressBookOperation implements AddressBookInterface {
                     System.out.println("Enter Last Name");
                     contacts.setLastName(scanner.next());
                     System.out.println("Enter contact Number:");
-                    contacts.setContactNo(scanner.next());
+                    contacts.setContactNo(scanner.nextInt());
                     System.out.println("Enter Email: ");
                     contacts.setEmail(scanner.next());
                     System.out.println("Enter Address: ");
@@ -144,7 +144,7 @@ public class AddressBookOperation implements AddressBookInterface {
                     System.out.println("Enter State: ");
                     contacts.setState(scanner.next());
                     System.out.println("Enetr Zip Code:");
-                    contacts.setZipCode(scanner.next());
+                    contacts.setZipCode(scanner.nextInt());
                     contactDetails.add(contacts);
                     System.out.println("Contact details added!");
                     return contactDetails;
@@ -186,8 +186,8 @@ public class AddressBookOperation implements AddressBookInterface {
                         break;
                     case 4:
                         System.out.println("Enter contact Number:");
-                        String contactno = scanner.next();
-                        contact.setContactNo(contactno);
+                        int phone_number = scanner.nextInt();
+                        contact.setContactNo(phone_number);
                         break;
                     case 5:
                         System.out.println("Enter Address:");
@@ -206,8 +206,8 @@ public class AddressBookOperation implements AddressBookInterface {
                         break;
                     case 8:
                         System.out.println("Enter Zipcode:");
-                        String zipcode = scanner.next();
-                        contact.setZipCode(zipcode);
+                        int zip_code = scanner.nextInt();
+                        contact.setZipCode(zip_code);
                         break;
                     default:
                         System.out.println("Enter valid choice");
@@ -373,7 +373,7 @@ public class AddressBookOperation implements AddressBookInterface {
     }
 
     //Adding records in AddressBookFile.txt File
-    public void addToTexrFile(HashMap<String, ArrayList<Contacts>> hashmap) {
+    public boolean addToTexrFile(HashMap<String, ArrayList<Contacts>> hashmap) {
         for (Map.Entry<String, ArrayList<Contacts>> addressBookHashMap : hashmap.entrySet()) {
             ArrayList<Contacts> values = addressBookHashMap.getValue();
             for (Contacts p : values)
@@ -383,13 +383,16 @@ public class AddressBookOperation implements AddressBookInterface {
                     writer1.write("\nAddress Book Name- "+addressBookHashMap.getKey()+"\tFirst Name- " + p.getFirstName() + "\tLast Name- " + p.getLastName()
                             + "\tContact Number- " + p.getContactNo() + "\tEmail- " + p.getEmail() + "\tAddress- " + p.getAddress() + "\tCity- " + p.getCity()
                             + "\tState-" + p.getState() + "\tZip Code- " + p.getZipCode());
+
                 } catch (IOException e) {
                     throw new RuntimeException(e);
+
                 }
         }
+        return true;
     }
     // Reading Records from AddressBookFile.txt file
-    public void readFromTextFile() {
+    public boolean readFromTextFile() {
         try {
             // Creating a BufferedReader object (instance)
             // A Reader that reads creates an input
@@ -405,13 +408,16 @@ public class AddressBookOperation implements AddressBookInterface {
             while ((st = reader.readLine()) != null) {
                 System.out.println(st);
             }
+            return true;
         } catch (IOException ex) {
             throw new RuntimeException(ex);
+
         }
+
     }
 
     // Writing the data into CSV File
-    public  void addToCSVFile(HashMap<String, ArrayList<Contacts>> hashmap) throws IOException {
+    public boolean addToCSVFile(HashMap<String, ArrayList<Contacts>> hashmap) throws IOException {
         try (Writer writer = Files.newBufferedWriter(Paths.get(CSV_FILE));
              CSVWriter csvWriter = new CSVWriter(writer, ',');) {
             System.out.println("First Name\t\t Last Name \t Contact Number \t Email \t Address \t City \t State \t Zip Code");
@@ -423,25 +429,11 @@ public class AddressBookOperation implements AddressBookInterface {
                     csvWriter.writeNext(s);
                 }
             }
-
-        /*for (Map.Entry<String, ArrayList<Contacts>> addressBookHashMap : hashmap.entrySet()) {
-            ArrayList<Contacts> values = addressBookHashMap.getValue();
-            for (Contacts p : values)
-            *//* writer reads the current line and the Java readLine function writer.readLine() returns a string.
-             Hence, the loop will iterate until it’s not null.*//*
-                try (BufferedWriter writer1 = new BufferedWriter(new FileWriter(CSV_FILE, true))) {
-                    writer1.write("\nAddress Book Name- " + addressBookHashMap.getKey() + "\tFirst Name- " + p.getFirstName() + "\tLast Name- " + p.getLastName()
-                            + "\tContact Number- " + p.getContactNo() + "\tEmail- " + p.getEmail() + "\tAddress- " + p.getAddress() + "\tCity- " + p.getCity()
-                            + "\tState-" + p.getState() + "\tZip Code- " + p.getZipCode());
-
-                } catch (Exception e) {
-                    System.out.println(e);
-                }
-        }*/
+            return true;
         }
     }
     // Reading CSV File
-    public  void readFromCSVFile() {
+    public  boolean readFromCSVFile() {
         try (
                 Reader reader = Files.newBufferedReader(Paths.get(CSV_FILE));
                 CSVReader csvReader = new CSVReader(reader)
@@ -453,14 +445,15 @@ public class AddressBookOperation implements AddressBookInterface {
                     System.out.print("\t");
                     System.out.print(token);
                 }
-
             }
+            return true;
         } catch (Exception e){
             System.out.println(e);
         }
+        return false;
     }
 
-    public void addToJSONFile(HashMap<String, ArrayList<Contacts>> hashmap) {
+    public boolean addToJSONFile(HashMap<String, ArrayList<Contacts>> hashmap) {
         // for (Map.Entry<String, ArrayList<Contacts>> entry : hashmap.entrySet())
         //   for (Contacts p : entry.getValue()) {
 
@@ -471,13 +464,12 @@ public class AddressBookOperation implements AddressBookInterface {
 
             String jsonString = gson.toJson(hashmap);
             writer1.write(jsonString);
-
+            return true;
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
-
     }
-    public void readFromJSONFile() {
+    public boolean readFromJSONFile() {
         try {
             // Creating a BufferedReader object (instance)
             // A Reader that reads creates an input
@@ -495,6 +487,7 @@ public class AddressBookOperation implements AddressBookInterface {
                 System.out.print("\n");
 
             }
+            return true;
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }

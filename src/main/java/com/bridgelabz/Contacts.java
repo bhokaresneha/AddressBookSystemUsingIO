@@ -1,10 +1,27 @@
 package com.bridgelabz;
 
-import java.util.ArrayList;
-import java.util.List;
-
 class Contacts {
-    private String firstName, lastName, address, city, state, zipCode, contactNo, email;
+    private String firstName, lastName, address, city, state, email,book_name,type;
+    private long phone_number;
+    private  int zip_code;
+
+    public Contacts(String first_name, String last_name, long phone_number, String email, String address, String city, String state, int zip_code, String book_name, String type) {
+        this.firstName=first_name;
+        this.lastName=last_name;
+        this.phone_number=phone_number;
+        this.email=email;
+        this.address=address;
+        this.city=city;
+        this.state=state;
+        this.zip_code=zip_code;
+        this.book_name=book_name;
+        this.type=type;
+    }
+
+    public Contacts() {
+
+    }
+
 
     //Getter methods =The get method returns the variable value
 
@@ -27,15 +44,23 @@ class Contacts {
     public String getState(){
         return state;
     }
-    public String getContactNo(){
-        return contactNo;
+    public long getContactNo(){
+        return phone_number;
     }
-    public String getZipCode(){
-        return zipCode;
+    public int getZipCode(){
+        return zip_code;
+    }
+    public String getBookType(){
+        return book_name;
     }
 
+    public String getType(){
+        return type;
+    }
+
+
     //Setter method =>The set method sets the value.
-    public void setFirstName(String firstName){
+    public  void setFirstName(String firstName){
         this.firstName = firstName;
     }
     public void setLastName(String lastName){
@@ -53,17 +78,20 @@ class Contacts {
     public void setState(String state){
         this.state = state;
     }
-    public void setContactNo(String contactNo){
-        this.contactNo=contactNo;
+    public void setContactNo(long phone_number){
+        this.phone_number=phone_number;
     }
-    public void setZipCode(String zipCode){
-        this.zipCode = zipCode;
+    public void setZipCode(int zip_code){
+        this.zip_code = zip_code;
     }
+    public  void setBookName(String book_name){this.book_name=book_name;}
+    public  void setType(String type){this.type=type;}
+
 
     public String toString(){
         return ("FirstName IS " + firstName + " \n LastNAme Is " + lastName + " \n Email Is " + email +
-                "\n Contact No Is " + contactNo + "\n Address Is " + address + " \n City Is " + city + "\n State Is " + state +
-                "\n Zip Code Is " + zipCode);
+                "\n Contact No Is " + phone_number + "\n Address Is " + address + " \n City Is " + city + "\n State Is " + state +
+                "\n Zip Code Is " + zip_code+"\n Book Name " +book_name+"\n Type "+type);
 
     }
 

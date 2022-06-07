@@ -20,11 +20,11 @@ public interface AddressBookInterface {
     void sortByName();
     void sortByCityStateOrZipCode();
     ArrayList<Contacts> displayActionMenu(ArrayList<Contacts> details) ;
-    void addToTexrFile(HashMap<String, ArrayList<Contacts>> hashmap);
-    void readFromTextFile();
-    void addToCSVFile(HashMap<String, ArrayList<Contacts>> hashmap) throws IOException;
-    void readFromCSVFile();
-    void addToJSONFile(HashMap<String, ArrayList<Contacts>> hashmap);
-    void readFromJSONFile();
+    boolean addToTexrFile(HashMap<String, ArrayList<Contacts>> hashmap);
+    boolean readFromTextFile();
+    boolean addToCSVFile(HashMap<String, ArrayList<Contacts>> hashmap) throws IOException;
+    boolean readFromCSVFile();
+    boolean addToJSONFile(HashMap<String, ArrayList<Contacts>> hashmap);
+    boolean readFromJSONFile();
 
 }
