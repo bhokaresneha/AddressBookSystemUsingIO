@@ -130,7 +130,7 @@ public class AddressBookOperation implements AddressBookInterface {
                 if (contact.getFirstName().equals(firstname)) {
                     System.out.print("Name already present");
                 } else {
-                    contacts.setFirstName(firstname);
+                    contacts.setFirstName(scanner.next());
                     System.out.println("Enter Last Name");
                     contacts.setLastName(scanner.next());
                     System.out.println("Enter contact Number:");

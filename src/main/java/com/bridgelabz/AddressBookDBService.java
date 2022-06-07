@@ -9,11 +9,12 @@ import java.util.Date;
 import java.util.List;
 
 public class AddressBookDBService {
+    List<Contacts> contactsList=new ArrayList<>();
+
     public List<Contacts> readData() {
 
         String sql="SELECT * FROM AddressBook";
 
-        List<Contacts> contactsList=new ArrayList<>();
         try{
             Connection connection=JDBCConnection.getConnection();
             Statement statement=connection.createStatement();
@@ -38,6 +39,36 @@ public class AddressBookDBService {
         return contactsList;
     }
 
+    public List<Contacts> readAddressBookData(IOService ioService) {
+        if (ioService.equals(IOService.DB_IO)) {
+            this.contactsList = readData();
+        }
+        return this.contactsList;
+    }
+    private Contacts getContactsData(String namePresent) {
+        return this.contactsList.stream().filter(employeePayrollDataItem -> employeePayrollDataItem.getFirstName().equals(namePresent)).findFirst().orElse(null);
+    }
+
+    public int updateContactName(String namePresent, String nameChange) {
+        int result = updateEmployeeData(namePresent, nameChange);
+        if (result == 0) return result;
+        Contacts contactsData = this.getContactsData(namePresent);
+        if (contactsData != null) {
+            contactsData.setFirstName(nameChange);
+        }
+        return result;
+    }
+
+    private int updateEmployeeData(String namePresent, String nameChange) {
+        String sql = String.format("update AddressBook set First_Name = '%s' where First_Name = '%s';", nameChange, namePresent);
+        try (Connection connection = JDBCConnection.getConnection()) {
+            Statement statement = connection.createStatement();
+            return statement.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 
 
 }
