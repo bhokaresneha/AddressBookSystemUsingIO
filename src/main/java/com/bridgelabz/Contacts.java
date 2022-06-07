@@ -60,7 +60,7 @@ class Contacts {
 
 
     //Setter method =>The set method sets the value.
-    public  void setFirstName(String firstName){
+    public  void setFirstName(String nameChange){
         this.firstName = firstName;
     }
     public void setLastName(String lastName){

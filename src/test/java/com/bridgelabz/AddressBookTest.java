@@ -19,12 +19,20 @@ public class AddressBookTest {
 
     @Test
     public void givenAddressBookInDB_WhenRetrieved_ShouldMatchContactCount()  {
-        List<Contacts> employeeData=addressBookDBService.readData();
-        for(Contacts data:employeeData){
+        List<Contacts> addressBookData = addressBookDBService.readAddressBookData(IOService.DB_IO);
+        for(Contacts data:addressBookData){
             System.out.println(data);
         }
-        Assertions.assertEquals(4,employeeData.size());
+        Assertions.assertEquals(4,addressBookData.size());
     }
 
 
+    @Test
+    public void givenNewContactDetail_WhenUpdated_ShouldSync() {
+        List<Contacts> addressBookData = addressBookDBService.readAddressBookData(IOService.DB_IO);
+        int changes = addressBookDBService.updateContactName("Samir", "Elon");
+        Assertions.assertEquals(1, changes);
+     //   boolean result = addressBookDBService.checkAddressBookInSyncWithDB("Elon");
+      //  Assertions.assertTrue(result);
+    }
 }
