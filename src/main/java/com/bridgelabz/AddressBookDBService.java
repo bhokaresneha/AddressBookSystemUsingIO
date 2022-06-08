@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class AddressBookDBService {
@@ -69,6 +68,35 @@ public class AddressBookDBService {
         }
         return 0;
     }
+
+
+ public int getCountOfContactsByCityOrState(String city) {
+     String sql = String.format("SELECT COUNT(*) From AddressBook Where City = '%s';", city);
+     ResultSet resultSet = null;
+     int count = 0;
+     try (Connection connection = JDBCConnection.getConnection()) {
+         Statement statement = connection.createStatement();
+         resultSet = statement.executeQuery(sql);
+         count=this.getContactCountData(resultSet);
+     } catch (SQLException e) {
+         e.printStackTrace();
+     }
+     return count;
+ }
+    private int getContactCountData(ResultSet result) {
+        int count = 0;
+        try {
+            while (result.next()) {
+                count = result.getInt("COUNT(*)");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+
+
 
 
 }
