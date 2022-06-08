@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,14 +12,15 @@ import java.util.List;
 public class AddressBookDBService {
     List<Contacts> contactsList=new ArrayList<>();
 
-    public List<Contacts> readData() {
+    private List<Contacts> readData() {
+        String sql = "select * from AddressBook; ";
+        return getEmployeePayrollDataUsingDB(sql);
+    }
 
-        String sql="SELECT * FROM AddressBook";
 
+
+    public List<Contacts> getContactData(ResultSet resultSet) {
         try{
-            Connection connection=JDBCConnection.getConnection();
-            Statement statement=connection.createStatement();
-            ResultSet resultSet=statement.executeQuery(sql);
             while (resultSet.next()){
                 String First_Name=resultSet.getString("First_Name");
                 String Last_Name=resultSet.getString("Last_Name");
@@ -70,5 +72,30 @@ public class AddressBookDBService {
         return 0;
     }
 
+    public List<Contacts> readAddressBookDataForDateRange(IOService ioService, int ZipCodeStart, int ZipCodeEnd) {
+        if (ioService.equals(IOService.DB_IO)) {
+            return getEmployeePayrollForDateRange(ZipCodeStart, ZipCodeEnd);
+                    }
+        return null;
+    }
+
+    private List<Contacts> getEmployeePayrollForDateRange(int ZipCodeStart, int ZipCodeEnd) {
+        String sql = String.format(" SELECT * FROM AddressBook WHERE Zip_Code BETWEEN %s AND %s;",ZipCodeStart,ZipCodeEnd);
+        return this.getEmployeePayrollDataUsingDB(sql);
+    }
+
+    private List<Contacts> getEmployeePayrollDataUsingDB(String sql) {
+       List<Contacts> contactDataList = new ArrayList<>();
+        try {
+            Connection connection = JDBCConnection.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery(sql);
+            contactDataList = this.getContactData(result);
+         //   System.out.println("GET DAtaa=>>>"+contactDataList.size());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return contactDataList;
+    }
 
 }
