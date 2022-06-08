@@ -3,7 +3,9 @@ package com.bridgelabz;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import java.util.List;
 
 public class AddressBookTest {
@@ -30,12 +32,20 @@ public class AddressBookTest {
 
     @Test
     public void givenNewContactDetail_WhenUpdated_ShouldSync() {
-        List<Contacts> addressBookData = addressBookDBService.readAddressBookData(IOService.DB_IO);
-        int changes = addressBookDBService.updateContactName("Samir", "Elon");
+       addressBookDBService.readAddressBookData(IOService.DB_IO);
+        int changes = addressBookDBService.updateContactName("Sneha", "Snehal");
         Assertions.assertEquals(1, changes);
      //   boolean result = addressBookDBService.checkAddressBookInSyncWithDB("Elon");
       //  Assertions.assertTrue(result);
     }
+
+@Test
+    public void whenAskedNumberOfContacts_ByCityOrState_ShouldReturnExactCount()  {
+       addressBookDBService.readAddressBookData(IOService.DB_IO);
+      int count = addressBookDBService.getCountOfContactsByCityOrState("Pune");
+    //System.out.println(count);
+        Assertions.assertEquals(4, count);
+
     @Test
     public void givenContactDetailRange_WhenRetrieved_ShouldMatchContactCount() {
 
@@ -46,5 +56,6 @@ public class AddressBookTest {
             System.out.println(data);
         }
         Assertions.assertEquals(3, addressBookData.size());
+
     }
 }
