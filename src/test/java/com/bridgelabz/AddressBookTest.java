@@ -3,6 +3,7 @@ package com.bridgelabz;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class AddressBookTest {
@@ -34,5 +35,16 @@ public class AddressBookTest {
         Assertions.assertEquals(1, changes);
      //   boolean result = addressBookDBService.checkAddressBookInSyncWithDB("Elon");
       //  Assertions.assertTrue(result);
+    }
+    @Test
+    public void givenContactDetailRange_WhenRetrieved_ShouldMatchContactCount() {
+
+        int ZipCodeStart=41000;
+        int ZipCodeEnd=413115;
+        List<Contacts> addressBookData = addressBookDBService.readAddressBookDataForDateRange(IOService.DB_IO, ZipCodeStart,ZipCodeEnd);
+        for(Contacts data:addressBookData){
+            System.out.println(data);
+        }
+        Assertions.assertEquals(3, addressBookData.size());
     }
 }
