@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import java.util.List;
 
 public class AddressBookTest {
@@ -44,5 +45,17 @@ public class AddressBookTest {
       int count = addressBookDBService.getCountOfContactsByCityOrState("Pune");
     //System.out.println(count);
         Assertions.assertEquals(4, count);
+
+    @Test
+    public void givenContactDetailRange_WhenRetrieved_ShouldMatchContactCount() {
+
+        int ZipCodeStart=41000;
+        int ZipCodeEnd=413115;
+        List<Contacts> addressBookData = addressBookDBService.readAddressBookDataForDateRange(IOService.DB_IO, ZipCodeStart,ZipCodeEnd);
+        for(Contacts data:addressBookData){
+            System.out.println(data);
+        }
+        Assertions.assertEquals(3, addressBookData.size());
+
     }
 }
