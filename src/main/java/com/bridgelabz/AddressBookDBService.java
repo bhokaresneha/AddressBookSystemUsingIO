@@ -1,9 +1,6 @@
 package com.bridgelabz;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +8,7 @@ import java.util.List;
 public class AddressBookDBService {
     List<Contacts> contactsList=new ArrayList<>();
 
-    private List<Contacts> readData() {
+    List<Contacts> readData() {
         String sql = "select * from AddressBook; ";
         return getEmployeePayrollDataUsingDB(sql);
     }
@@ -73,12 +70,12 @@ public class AddressBookDBService {
 
     public List<Contacts> readAddressBookDataForDateRange(IOService ioService, int ZipCodeStart, int ZipCodeEnd) {
         if (ioService.equals(IOService.DB_IO)) {
-            return getEmployeePayrollForDateRange(ZipCodeStart, ZipCodeEnd);
+            return getDataForDateRange(ZipCodeStart, ZipCodeEnd);
                     }
         return null;
     }
 
-    private List<Contacts> getEmployeePayrollForDateRange(int ZipCodeStart, int ZipCodeEnd) {
+    private List<Contacts> getDataForDateRange(int ZipCodeStart, int ZipCodeEnd) {
         String sql = String.format(" SELECT * FROM AddressBook WHERE Zip_Code BETWEEN %s AND %s;",ZipCodeStart,ZipCodeEnd);
         return this.getEmployeePayrollDataUsingDB(sql);
     }
@@ -123,7 +120,16 @@ public class AddressBookDBService {
     }
 
 
-
-
+    public void addContact() {
+        String sql = "INSERT INTO AddressBook(First_Name,Last_Name,Phone_Number,Email,Address,City,State,Zip_Code,Book_Name,Type) VALUES\n" +
+                "          ('Simran','Shinde',9762689841,'sneha@gmail.com','Sangvi','Pune','Maharashtra',444222,'TCS','Profession')";
+        try {
+            Connection connection = JDBCConnection.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error: " + e);
+        }
+    }
 
 }
