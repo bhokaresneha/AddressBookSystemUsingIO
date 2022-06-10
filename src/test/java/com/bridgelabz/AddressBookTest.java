@@ -40,22 +40,30 @@ public class AddressBookTest {
     }
 
 @Test
-    public void whenAskedNumberOfContacts_ByCityOrState_ShouldReturnExactCount()  {
-       addressBookDBService.readAddressBookData(IOService.DB_IO);
-      int count = addressBookDBService.getCountOfContactsByCityOrState("Pune");
+    public void whenAskedNumberOfContacts_ByCityOrState_ShouldReturnExactCount() {
+    addressBookDBService.readAddressBookData(IOService.DB_IO);
+    int count = addressBookDBService.getCountOfContactsByCityOrState("Pune");
     //System.out.println(count);
-        Assertions.assertEquals(4, count);
-
+    Assertions.assertEquals(4, count);
+}
     @Test
-    public void givenContactDetailRange_WhenRetrieved_ShouldMatchContactCount() {
+    public void givenContactDetailRange_WhenRetrieved_ShouldMatchContactCount () {
 
-        int ZipCodeStart=41000;
-        int ZipCodeEnd=413115;
-        List<Contacts> addressBookData = addressBookDBService.readAddressBookDataForDateRange(IOService.DB_IO, ZipCodeStart,ZipCodeEnd);
-        for(Contacts data:addressBookData){
+        int ZipCodeStart = 41000;
+        int ZipCodeEnd = 413115;
+        List<Contacts> addressBookData = addressBookDBService.readAddressBookDataForDateRange(IOService.DB_IO, ZipCodeStart, ZipCodeEnd);
+        for (Contacts data : addressBookData) {
             System.out.println(data);
         }
         Assertions.assertEquals(3, addressBookData.size());
 
+    }
+    @Test
+    public void addNewContact_ShouldMatchContactCount(){
+
+        addressBookDBService.addContact();
+        List<Contacts> contactsList = addressBookDBService.readData();
+      //  System.out.println(contactsList);
+        Assertions.assertEquals(9, contactsList.size());
     }
 }
